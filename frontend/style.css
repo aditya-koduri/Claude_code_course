@@ -5,23 +5,23 @@
     padding: 0;
 }
 
-/* CSS Variables */
+/* CSS Variables - Baby Pink Palette */
 :root {
-    --primary-color: #2563eb;
-    --primary-hover: #1d4ed8;
-    --background: #0f172a;
-    --surface: #1e293b;
-    --surface-hover: #334155;
-    --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --border-color: #334155;
-    --user-message: #2563eb;
-    --assistant-message: #374151;
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    --primary-color: #f8a5c2;
+    --primary-hover: #f472b6;
+    --background: #fdf2f8;
+    --surface: #fce7f3;
+    --surface-hover: #fbcfe8;
+    --text-primary: #831843;
+    --text-secondary: #be185d;
+    --border-color: #f9a8d4;
+    --user-message: #ec4899;
+    --assistant-message: #fce7f3;
+    --shadow: 0 4px 6px -1px rgba(244, 114, 182, 0.3);
     --radius: 12px;
-    --focus-ring: rgba(37, 99, 235, 0.2);
-    --welcome-bg: #1e3a5f;
-    --welcome-border: #2563eb;
+    --focus-ring: rgba(248, 165, 194, 0.3);
+    --welcome-bg: #fce7f3;
+    --welcome-border: #f8a5c2;
 }
 
 /* Base Styles */
@@ -34,6 +34,66 @@ body {
     overflow: hidden;
     margin: 0;
     padding: 0;
+    position: relative;
+}
+
+/* Cat blowing kiss background */
+body::after {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle fill='%23ff69b4' stroke='%23ff1493' stroke-width='3' cx='100' cy='90' r='50'/%3E%3Ccircle fill='%23ff69b4' cx='75' cy='65' r='15'/%3E%3Ccircle fill='%23ff69b4' cx='125' cy='65' r='15'/%3E%3Cpath fill='%23ff1493' d='M115,60 Q125,50 135,60 Q125,70 115,60'/%3E%3Ccircle fill='%23000' cx='85' cy='85' r='4'/%3E%3Ccircle fill='%23000' cx='115' cy='85' r='4'/%3E%3Cpath fill='none' stroke='%23000' stroke-width='2' d='M100,95 L95,105 L105,105 Z'/%3E%3Cpath fill='none' stroke='%23000' stroke-width='2' d='M100,105 Q90,115 80,110 M100,105 Q110,115 120,110'/%3E%3Cpath fill='%23ff69b4' d='M140,70 C140,65 145,65 145,70 C145,65 150,65 150,70 C150,75 145,80 140,75 Z'/%3E%3C/svg%3E") center/contain no-repeat;
+    opacity: 0.4;
+    z-index: 999;
+    pointer-events: none;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+    50% { transform: translate(-50%, -50%) translateY(-10px); }
+}
+
+/* Hello Kitty Animations */
+@keyframes helloKittyFloat {
+    0%, 100% { transform: translate(-50%, -50%) translateY(0px) rotate(0deg); }
+    50% { transform: translate(-50%, -50%) translateY(-15px) rotate(3deg); }
+}
+
+@keyframes blowKiss {
+    0%, 80%, 100% { 
+        transform: translate(-50%, -50%) translateY(0px) rotate(0deg) scale(1);
+        filter: brightness(1);
+    }
+    85% { 
+        transform: translate(-50%, -50%) translateY(-8px) rotate(-3deg) scale(1.08);
+        filter: brightness(1.15);
+    }
+    90% { 
+        transform: translate(-50%, -50%) translateY(-5px) rotate(2deg) scale(1.04);
+        filter: brightness(1.08);
+    }
+}
+
+/* Reduce animation for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    body::before {
+        animation: none;
+    }
+}
+
+/* Responsive Hello Kitty sizing */
+@media (max-width: 768px) {
+    body::before {
+        width: 300px;
+        height: 300px;
+        opacity: 0.4;
+        transform: translate(-50%, -50%);
+    }
 }
 
 /* Container - Full Screen */
@@ -44,6 +104,9 @@ body {
     flex-direction: column;
     margin: 0;
     padding: 0;
+    position: relative;
+    z-index: 1;
+    background: transparent;
 }
 
 /* Header - Hidden */
@@ -72,7 +135,7 @@ header h1 {
     flex: 1;
     display: flex;
     overflow: hidden;
-    background: var(--background);
+    background: transparent;
 }
 
 /* Left Sidebar */
@@ -131,6 +194,49 @@ header h1 {
     width: 100%;
     max-width: 800px;
     margin: 0;
+}
+
+/* Sidebar New Chat Button */
+.sidebar-new-chat {
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.new-chat-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.new-chat-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.new-chat-button:hover {
+    background: var(--surface-hover);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.new-chat-button:active {
+    transform: translateY(0);
+}
+
+.new-chat-button svg {
+    flex-shrink: 0;
 }
 
 /* Chat Messages */
@@ -243,6 +349,29 @@ header h1 {
 .sources-content {
     padding: 0 0.5rem 0.25rem 1.5rem;
     color: var(--text-secondary);
+}
+
+/* Source link styling */
+.source-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--primary-color);
+    transition: all 0.2s ease;
+    display: inline-block;
+    margin: 0.1rem 0;
+}
+
+.source-link:hover {
+    color: var(--primary-hover);
+    border-bottom-color: var(--primary-hover);
+    border-bottom-style: solid;
+    transform: translateY(-1px);
+}
+
+.source-link:focus {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+    border-radius: 2px;
 }
 
 /* Markdown formatting styles */
