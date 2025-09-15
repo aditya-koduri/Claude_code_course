@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Chatbot Codebase Architecture</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .architecture {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .layer {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .component {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .component:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .frontend { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+        .backend { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .storage { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .ai { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); color: #333; }
+        
+        .component h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+        }
+        
+        .component p {
+            margin: 0;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .flow-arrow {
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: #667eea;
+        }
+        
+        .data-flow {
+            margin: 40px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .flow-number {
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .tech-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+        }
+        
+        .tech-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .architecture {
+                grid-template-columns: 1fr;
+            }
+            .flow-arrow {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 RAG Chatbot Architecture</h1>
+        
+        <div class="architecture">
+            <!-- Frontend Layer -->
+            <div class="layer">
+                <div class="component frontend">
+                    <h3>🌐 Frontend</h3>
+                    <p><strong>HTML/CSS/JS</strong></p>
+                    <p>Simple web interface for chat interactions</p>
+                    <div class="flow-arrow">→</div>
+                </div>
+            </div>
+            
+            <!-- Backend Layer -->
+            <div class="layer">
+                <div class="component backend">
+                    <h3>🚀 FastAPI Server</h3>
+                    <p><strong>app.py</strong></p>
+                    <p>REST API with CORS, serves frontend, handles queries</p>
+                </div>
+                
+                <div class="component backend">
+                    <h3>🧠 RAG System</h3>
+                    <p><strong>rag_system.py</strong></p>
+                    <p>Main orchestrator coordinating all components</p>
+                </div>
+                
+                <div class="component backend">
+                    <h3>📄 Document Processor</h3>
+                    <p><strong>document_processor.py</strong></p>
+                    <p>Text extraction and chunking</p>
+                </div>
+                
+                <div class="component backend">
+                    <h3>🔍 Search Tools</h3>
+                    <p><strong>search_tools.py</strong></p>
+                    <p>Tool-based search capabilities</p>
+                </div>
+                
+                <div class="component backend">
+                    <h3>💭 Session Manager</h3>
+                    <p><strong>session_manager.py</strong></p>
+                    <p>Conversation context tracking</p>
+                    <div class="flow-arrow">→</div>
+                </div>
+            </div>
+            
+            <!-- Storage & AI Layer -->
+            <div class="layer">
+                <div class="component storage">
+                    <h3>🗄️ Vector Store</h3>
+                    <p><strong>ChromaDB</strong></p>
+                    <p>Semantic search with embeddings</p>
+                </div>
+                
+                <div class="component ai">
+                    <h3>🤖 AI Generator</h3>
+                    <p><strong>Anthropic Claude</strong></p>
+                    <p>Natural language responses</p>
+                </div>
+                
+                <div class="component storage">
+                    <h3>📚 Course Documents</h3>
+                    <p><strong>/docs folder</strong></p>
+                    <p>Course materials (txt files)</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="data-flow">
+            <h2>🔄 Query Processing Flow</h2>
+            
+            <div class="flow-step">
+                <div class="flow-number">1</div>
+                <div>User submits query through web interface</div>
+            </div>
+            
+            <div class="flow-step">
+                <div class="flow-number">2</div>
+                <div>FastAPI receives query and forwards to RAG System</div>
+            </div>
+            
+            <div class="flow-step">
+                <div class="flow-number">3</div>
+                <div>RAG System creates session (if needed) and retrieves conversation history</div>
+            </div>
+            
+            <div class="flow-step">
+                <div class="flow-number">4</div>
+                <div>AI Generator uses search tools to find relevant course content</div>
+            </div>
+            
+            <div class="flow-step">
+                <div class="flow-number">5</div>
+                <div>Vector Store performs semantic search on document chunks</div>
+            </div>
+            
+            <div class="flow-step">
+                <div class="flow-number">6</div>
+                <div>Retrieved context is sent to Claude AI for response generation</div>
+            </div>
+            
+            <div class="flow-step">
+                <div class="flow-number">7</div>
+                <div>Response and sources are returned to user via web interface</div>
+            </div>
+        </div>
+        
+        <h2>🛠️ Technology Stack</h2>
+        <div class="tech-stack">
+            <div class="tech-item">
+                <strong>Vector Database</strong>
+                ChromaDB 1.0.15
+            </div>
+            <div class="tech-item">
+                <strong>AI Model</strong>
+                Anthropic Claude
+            </div>
+            <div class="tech-item">
+                <strong>Embeddings</strong>
+                SentenceTransformers 5.0.0
+            </div>
+            <div class="tech-item">
+                <strong>Web Framework</strong>
+                FastAPI 0.116.1
+            </div>
+            <div class="tech-item">
+                <strong>Server</strong>
+                Uvicorn 0.35.0
+            </div>
+            <div class="tech-item">
+                <strong>Frontend</strong>
+                HTML/CSS/JavaScript
+            </div>
+        </div>
+        
+        <div style="margin-top: 40px; padding: 20px; background: #e8f4f8; border-radius: 8px; text-align: center;">
+            <h3>🎯 Key Features</h3>
+            <p><strong>Semantic Search:</strong> Uses vector embeddings for intelligent content retrieval<br>
+            <strong>Conversation Memory:</strong> Maintains context across chat sessions<br>
+            <strong>Tool-based AI:</strong> Claude uses search tools to find and cite sources<br>
+            <strong>Course Analytics:</strong> Provides statistics and metadata about loaded courses</p>
+        </div>
+    </div>
+</body>
+</html>
